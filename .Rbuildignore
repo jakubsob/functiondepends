@@ -1,0 +1,12 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^LICENSE\.md$
+^codecov\.yml$
+^\.travis\.yml$
+^appveyor\.yml$
+^doc$
+^Meta$
+^README\.Rmd$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

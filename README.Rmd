@@ -1,0 +1,109 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%",
+  message = FALSE
+)
+```
+
+# functiondepends
+
+<!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Travis build status](https://travis-ci.com/WelcomeToMyVirtualHome/functiondepends.svg?branch=master)](https://travis-ci.com/WelcomeToMyVirtualHome/functiondepends)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/WelcomeToMyVirtualHome/functiondepends?branch=master&svg=true)](https://ci.appveyor.com/project/WelcomeToMyVirtualHome/functiondepends)
+[![codecov](https://codecov.io/gh/WelcomeToMyVirtualHome/functiondepends/branch/master/graph/badge.svg)](https://codecov.io/gh/WelcomeToMyVirtualHome/functiondepends)
+<!-- badges: end -->
+
+The goal of functiondepends is to allow for tidy exploration of unstructured codebase without evaluation of code. 
+
+## Installation
+
+One can install `functiondepends` from GitHub with:
+
+```{r, eval = FALSE}
+# install.packages("devtools")
+devtools::install_github("WelcomeToMyVirtualHome/functiondepends")
+```
+
+```{r}
+library(functiondepends)
+```
+
+## Examples
+
+```{r}
+# Create environment for loaded functions 
+envir <- new.env()
+# Seach recursively current directory
+functions <- find_functions(".", envir = envir, recursive = TRUE)
+functions
+```
+
+Search for dependencies of function `functions_in_path` within parsed functions:
+
+```{r}
+dependency <- find_dependencies("find_functions", envir = envir, in_envir = TRUE)
+dependency
+```
+
+Search for all dependencies of function:
+
+```{r functions_in_path, fig.height=4}
+library(ggplot2)
+library(dplyr)
+
+dependency <- find_dependencies("find_dependencies", envir = envir, in_envir = FALSE)
+
+dependency %>% 
+  ggplot(aes(x = reorder(Source, SourceRep), y = SourceRep)) +
+  geom_col() +
+  coord_flip() +
+  labs(title = "functions_in_path", x = "Source")
+```
+
+Limit results to functions only parsed from source files (user defined):
+
+```{r target_degree, fig.height=4}
+library(ggplot2)
+library(dplyr)
+
+dependency <- find_dependencies(unique(functions$Function), envir = envir, in_envir = FALSE)
+dependency %>% 
+  distinct(Target, TargetInDegree) %>%
+  mutate(Target = reorder(Target, TargetInDegree)) %>%
+  ggplot(aes(x = Target, y = TargetInDegree)) +
+  geom_col() +
+  coord_flip() 
+```
+
+```{r network, fig.height=4}
+library(igraph)
+library(dplyr)
+
+edges <- dependency %>% 
+  select(Source, Target) %>% 
+  filter(!is.na(.))
+vertices <- unique(c(edges$Source, edges$Target))
+
+g <- graph_from_data_frame(
+  d = edges, 
+  vertices = vertices,
+  directed = TRUE
+)
+plot(
+  g,
+  vertex.color = "grey",
+  edge.color = "grey", 
+  vertex.size = 20
+)
+```
+

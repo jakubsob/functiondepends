@@ -1,0 +1,31 @@
+Package: functiondepends
+Type: Package
+Title: Find functions and their dependencies
+Version: 0.1.0
+Authors@R: person(
+    "Jakub",
+    "Sobolewski",
+    email = "jakupsob@gmail.com",
+    role = c("aut", "cre"))
+Description: The purpose of this package is to find functions in unstructured directory
+     and to find dependencies between user-defined functions found in given directory.
+     Sourcing of R files is performed without side-effects i.e. from R scripts that have
+     executable code and function definitions only function definitions will be evaluated.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Suggests: 
+    testthat,
+    covr,
+    knitr,
+    rmarkdown,
+    ggplot2,
+    igraph
+Imports: 
+    dplyr (>= 1.0.1),
+    tidyr (>= 1.1.1),
+    stringr (>= 1.4.0),
+    purrr (>= 0.3.4),
+    magrittr (>= 1.5),
+    tibble (>= 3.0.3),
+RoxygenNote: 7.1.1
