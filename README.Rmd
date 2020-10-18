@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 # functiondepends
 
 <!-- badges: start -->
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![Travis build status](https://travis-ci.com/WelcomeToMyVirtualHome/functiondepends.svg?branch=master)](https://travis-ci.com/WelcomeToMyVirtualHome/functiondepends)
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/WelcomeToMyVirtualHome/functiondepends?branch=master&svg=true)](https://ci.appveyor.com/project/WelcomeToMyVirtualHome/functiondepends)
 [![codecov](https://codecov.io/gh/WelcomeToMyVirtualHome/functiondepends/branch/master/graph/badge.svg)](https://codecov.io/gh/WelcomeToMyVirtualHome/functiondepends)
@@ -64,7 +64,7 @@ library(dplyr)
 dependency <- find_dependencies("find_dependencies", envir = envir, in_envir = FALSE)
 
 dependency %>% 
-  ggplot(aes(x = reorder(Source, SourceRep), y = SourceRep)) +
+  ggplot(aes(x = reorder(Source, SourceRep), y = SourceRep, fill = Namespace)) +
   geom_col() +
   coord_flip() +
   labs(title = "functions_in_path", x = "Source")

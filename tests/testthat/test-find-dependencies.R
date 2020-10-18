@@ -17,6 +17,7 @@ test_that("find_dependencies: 1 dependency", {
     tibble::tibble(
       Source = "add",
       SourceRep = 2,
+      Namespace = NA,
       Target = "add_two",
       TargetInDegree = 1
     )
@@ -38,6 +39,7 @@ test_that("find_dependencies: no dependencies", {
     tibble::tibble(
       Source = NA,
       SourceRep = 0,
+      Namespace = NA,
       Target = "add",
       TargetInDegree = 1
     )

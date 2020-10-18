@@ -12,6 +12,9 @@
 #' @return A tibble with columns:
 #'     - Source: character, name of function called inside `Target`
 #'     - SourceRep: integer, number of times `Source` is called
+#'     - Namespace: character, name of namespace from which the function comes, if
+#'         a function is defined in multiple namespaces then it is a vector. If function
+#'         is user defined `Namespace` is NA.
 #'     - Target: character, name of inspected function
 #'     - TargetInDegree: integer, number of function calls inside of function body
 #'
@@ -20,6 +23,7 @@ find_dependencies <- function(function_name, envir = .GlobalEnv, in_envir = TRUE
 
   purrr::map_dfr(function_name, ~ {
     f_body <- deparse(body(get(.x, envir = envir)))
+
     calls <- unlist(stringr::str_extract_all(f_body, "[[:alnum:]\\.\\_]+\\(|[[:alnum:]\\.\\_]+::[[:alnum:]\\.\\_]+\\("))
     calls <- stringr::str_remove_all(calls, "\\(")
 
@@ -48,8 +52,24 @@ find_dependencies <- function(function_name, envir = .GlobalEnv, in_envir = TRUE
       )},
       logical(1)
     )
-
     functions <- dplyr::filter(functions, is_fun)
+    functions <- functions %>%
+      dplyr::bind_cols(tibble::as_tibble(stringr::str_locate(functions$Source, "::"))) %>%
+      dplyr::mutate(
+        Namespace = ifelse(
+          is.na(start),
+          Vectorize(find, "what")(Source, mode = "function"),
+          stringr::str_sub(Source, 1, start - 1)
+        ),
+        Namespace = gsub("package:", "", Namespace),
+        Namespace = ifelse(Namespace == "character(0)", NA, Namespace),
+        Source = ifelse(
+          is.na(start),
+          Source,
+          stringr::str_sub(Source, end + 1)
+        )
+      ) %>%
+      dplyr::select(-c(start, end))
 
     if (in_envir) {
       functions <- dplyr::filter(functions, Source %in% ls(envir))
@@ -59,6 +79,7 @@ find_dependencies <- function(function_name, envir = .GlobalEnv, in_envir = TRUE
       functions <- tibble::tibble(
         Source = NA,
         SourceRep = 0,
+        Namespace = NA,
         Target = .x,
         TargetInDegree = 0
       )

@@ -54,11 +54,11 @@ functions:
 ``` r
 dependency <- find_dependencies("find_functions", envir = envir, in_envir = TRUE)
 dependency
-#> # A tibble: 2 x 4
-#>   Source            SourceRep Target         TargetInDegree
-#>   <chr>                 <int> <chr>                   <int>
-#> 1 get_function_name         1 find_functions              2
-#> 2 is_function               1 find_functions              2
+#> # A tibble: 2 x 5
+#>   Source            SourceRep Namespace Target         TargetInDegree
+#>   <chr>                 <int> <chr>     <chr>                   <int>
+#> 1 get_function_name         1 <NA>      find_functions              2
+#> 2 is_function               1 <NA>      find_functions              2
 ```
 
 Search for all dependencies of function:
@@ -70,7 +70,7 @@ library(dplyr)
 dependency <- find_dependencies("find_dependencies", envir = envir, in_envir = FALSE)
 
 dependency %>% 
-  ggplot(aes(x = reorder(Source, SourceRep), y = SourceRep)) +
+  ggplot(aes(x = reorder(Source, SourceRep), y = SourceRep, fill = Namespace)) +
   geom_col() +
   coord_flip() +
   labs(title = "functions_in_path", x = "Source")

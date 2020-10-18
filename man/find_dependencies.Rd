@@ -17,6 +17,9 @@ find_dependencies(function_name, envir = .GlobalEnv, in_envir = TRUE)
 A tibble with columns:
     - Source: character, name of function called inside `Target`
     - SourceRep: integer, number of times `Source` is called
+    - Namespace: character, name of namespace from which the function comes, if
+        a function is defined in multiple namespaces then it is a vector. If function
+        is user defined `Namespace` is NA.
     - Target: character, name of inspected function
     - TargetInDegree: integer, number of function calls inside of function body
 }
