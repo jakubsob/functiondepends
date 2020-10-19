@@ -6,7 +6,7 @@
 <!-- badges: start -->
 
 [![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![Travis build
 status](https://travis-ci.com/WelcomeToMyVirtualHome/functiondepends.svg?branch=master)](https://travis-ci.com/WelcomeToMyVirtualHome/functiondepends)
 [![AppVeyor build
@@ -48,7 +48,7 @@ functions
 #> 5 R      find-functions.R    find_functions
 ```
 
-Search for dependencies of function `functions_in_path` within parsed
+Search for dependencies of function `find_functions` within parsed
 functions:
 
 ``` r
@@ -68,17 +68,16 @@ library(ggplot2)
 library(dplyr)
 
 dependency <- find_dependencies("find_dependencies", envir = envir, in_envir = FALSE)
-
 dependency %>% 
-  ggplot(aes(x = reorder(Source, SourceRep), y = SourceRep, fill = Namespace)) +
+  slice_max(SourceRep, n = 10) %>% 
+  mutate(Source = reorder(Source, SourceRep)) %>% 
+  ggplot(aes(x = Source, y = SourceRep, fill = Namespace)) +
   geom_col() +
   coord_flip() +
-  labs(title = "functions_in_path", x = "Source")
+  labs(caption = "Top 10 most repeated function calls in 'find_dependencies' function.")
 ```
 
 <img src="man/figures/README-functions_in_path-1.png" width="100%" />
-
-Limit results to functions only parsed from source files (user defined):
 
 ``` r
 library(ggplot2)
@@ -90,7 +89,8 @@ dependency %>%
   mutate(Target = reorder(Target, TargetInDegree)) %>%
   ggplot(aes(x = Target, y = TargetInDegree)) +
   geom_col() +
-  coord_flip() 
+  coord_flip() + 
+  labs(caption = "Functions with most function calls.")
 ```
 
 <img src="man/figures/README-target_degree-1.png" width="100%" />
@@ -109,11 +109,16 @@ g <- graph_from_data_frame(
   vertices = vertices,
   directed = TRUE
 )
+deg <- degree(g, mode = "in")
+V(g)$size <- deg
+V(g)$label.cex <- (degree(g, mode = "in", normalized = TRUE) + 1) / 1.8
+
 plot(
   g,
   vertex.color = "grey",
-  edge.color = "grey", 
-  vertex.size = 20
+  edge.color = "grey",
+  edge.arrow.size = .4,
+  main = "Functions dependency graph"
 )
 ```
 
