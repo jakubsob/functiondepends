@@ -4,6 +4,7 @@
 # functiondepends <img src="man/figures/logo.png" align="right" width="120" />
 
 <!-- badges: start -->
+
 [![Lifecycle:
 maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![Travis build
@@ -38,7 +39,7 @@ envir <- new.env()
 functions <- find_functions(".", envir = envir, recursive = TRUE)
 functions
 #> # A tibble: 5 x 3
-#>   Level1 Level2              Function         
+#>   Level1 Source              Function         
 #>   <chr>  <chr>               <chr>            
 #> 1 R      find-dependencies.R find_dependencies
 #> 2 R      find-functions.R    is_function      
@@ -55,9 +56,9 @@ dependency <- find_dependencies("find_functions", envir = envir, in_envir = TRUE
 dependency
 #> # A tibble: 2 x 5
 #>   Source            SourceRep Namespace Target         TargetInDegree
-#>   <chr>                 <int> <chr>     <chr>                   <int>
-#> 1 get_function_name         1 <NA>      find_functions              2
-#> 2 is_function               1 <NA>      find_functions              2
+#>   <chr>                 <int> <lgl>     <chr>                   <int>
+#> 1 get_function_name         1 NA        find_functions              2
+#> 2 is_function               1 NA        find_functions              2
 ```
 
 Search for all dependencies of function:

@@ -1,8 +1,8 @@
 #' Find dependencies
 #'
 #' This function finds function calls inside a function with given name. Be aware that
-#' any variable that has a name that overwrites a function name will be registered as
-#' a function call. Use with caution.
+#' any variable that has a name that overwrites a function name will be recognised as
+#' a function call.
 #'
 #' @param function_name Character, name of function
 #' @param envir Environment in which to search for function. Deafult is \code{.GlobalEnv}
@@ -24,18 +24,28 @@ find_dependencies <- function(function_name, envir = .GlobalEnv, in_envir = TRUE
   purrr::map_dfr(function_name, ~ {
     f_body <- deparse(body(get(.x, envir = envir)))
 
-    calls <- unlist(stringr::str_extract_all(f_body, "[[:alnum:]\\.\\_]+\\(|[[:alnum:]\\.\\_]+::[[:alnum:]\\.\\_]+\\("))
+    calls <- unlist(stringr::str_extract_all(
+      f_body,
+      "[[:alnum:]\\.\\_]+\\(|[[:alnum:]\\.\\_]+::[[:alnum:]\\.\\_]+\\("
+    ))
     calls <- stringr::str_remove_all(calls, "\\(")
 
     arguments <- unlist(stringr::str_extract_all(f_body, "\\((.*?)\\)"))
     arguments <- unlist(stringr::str_remove_all(arguments, "^\\(|\\)$"))
-    arguments <- unlist(stringr::str_extract_all(arguments, "[[:alnum:]\\.\\_]+|[[:alnum:]\\.\\_]+::[[:alnum:]\\.\\_]+"))
+    arguments <- unlist(stringr::str_extract_all(
+      arguments,
+      "[[:alnum:]\\.\\_]+|[[:alnum:]\\.\\_]+::[[:alnum:]\\.\\_]+"
+    ))
 
     functions <- tibble::tibble(
       Source = c(calls, arguments)
     ) %>%
       dplyr::group_by(Source) %>%
       dplyr::tally(name = "SourceRep")
+
+    if (in_envir) {
+      functions <- dplyr::filter(functions, Source %in% ls(envir))
+    }
 
     is_fun <- vapply(functions$Source, function(x) {
       tryCatch(
@@ -52,7 +62,8 @@ find_dependencies <- function(function_name, envir = .GlobalEnv, in_envir = TRUE
       )},
       logical(1)
     )
-    functions <- dplyr::filter(functions, is_fun)
+
+    functions <- dplyr::filter(functions, is_fun[names(is_fun) %in% functions$Source])
     functions <- functions %>%
       dplyr::bind_cols(tibble::as_tibble(stringr::str_locate(functions$Source, "::"))) %>%
       dplyr::mutate(
@@ -70,10 +81,6 @@ find_dependencies <- function(function_name, envir = .GlobalEnv, in_envir = TRUE
         )
       ) %>%
       dplyr::select(-c(start, end))
-
-    if (in_envir) {
-      functions <- dplyr::filter(functions, Source %in% ls(envir))
-    }
 
     if (nrow(functions) == 0) {
       functions <- tibble::tibble(

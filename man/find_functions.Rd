@@ -14,8 +14,9 @@ find_functions(path, envir = .GlobalEnv, recursive = TRUE)
 \item{recursive}{Logical, whether to search files recursively}
 }
 \value{
-A tibble with character columns indicating path to source files and names of functions defined
-    in them.
+A tibble with character columns indicating path to source files and names of functions
+    defined in them. Path elements are split into columns with `Level` prefix,
+    name of source file is in `Source` column, name of function is in `Function` column.
 }
 \description{
 Parses files in given path. It searches for functions and loads them. Is safe for use with scripts
@@ -23,7 +24,8 @@ as it doesn't source the whole file, just functions. There are no side-effects t
 }
 \examples{
 \donttest{
-dir.create(file.path(tempdir(), "find_functions"), showWarnings = FALSE)
+path <- file.path(tempdir(), "find_functions_example")
+dir.create(path, showWarnings = FALSE)
 code <- "
 add <- function(x, y) {
   x + y
@@ -35,8 +37,7 @@ assign('add_two', function(x) {
   add(x, 2)
 })
 "
-write(code, file.path(tempdir(), "find_functions", "code.R"))
-find_functions(file.path(tempdir(), "find_functions"))
+write(code, file.path(path, "code.R"))
+find_functions(path)
 }
-
 }

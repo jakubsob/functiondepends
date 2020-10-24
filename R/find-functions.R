@@ -50,12 +50,14 @@ is_assign <- function(expr) {
 #' @param recursive Logical, whether to search files recursively
 #'
 #' @export
-#' @return A tibble with character columns indicating path to source files and names of functions defined
-#'     in them.
+#' @return A tibble with character columns indicating path to source files and names of functions
+#'     defined in them. Path elements are split into columns with `Level` prefix,
+#'     name of source file is in `Source` column, name of function is in `Function` column.
 #'
 #' @examples
 #' \donttest{
-#' dir.create(file.path(tempdir(), "find_functions"), showWarnings = FALSE)
+#' path <- file.path(tempdir(), "find_functions_example")
+#' dir.create(path, showWarnings = FALSE)
 #' code <- "
 #' add <- function(x, y) {
 #'   x + y
@@ -67,17 +69,17 @@ is_assign <- function(expr) {
 #'   add(x, 2)
 #' })
 #' "
-#' write(code, file.path(tempdir(), "find_functions", "code.R"))
-#' find_functions(file.path(tempdir(), "find_functions"))
+#' write(code, file.path(path, "code.R"))
+#' find_functions(path)
 #' }
-#'
 #' @importFrom magrittr %>%
 find_functions <- function(path, envir = .GlobalEnv, recursive = TRUE) {
-  sourceFiles <- list.files(path, full.names = TRUE, recursive = recursive, pattern = ".R$")
-
-  warn <- options()$warn
-  options(warn = -1)
-  on.exit(options(warn = warn))
+  sourceFiles <- list.files(
+    path,
+    full.names = TRUE,
+    recursive = recursive,
+    pattern = ".R$"
+  )
 
   if (length(sourceFiles) == 0) {
     message("No .R files in directory")
@@ -93,15 +95,26 @@ find_functions <- function(path, envir = .GlobalEnv, recursive = TRUE) {
     tibble::tibble(Path = .x, Function = funcsNames)
   })
 
-  df$Path <- stringr::str_remove(df$Path, "^\\./|^/|^\\\\|^\\.")
-  paths <- stringr::str_split(df$Path, pattern = "/|\\|\\\\")
+  source_name <- basename(df$Path)
+  Path <- Source <- Function <- NULL
+
+  df <- df %>%
+    dplyr::mutate(
+      Path = stringr::str_remove(Path, "^\\./|^/|^\\\\|^\\."),
+      Path = stringr::str_remove(Path, source_name),
+      Path = stringr::str_remove(Path, "/$|\\\\$")
+    )
+
+  paths <- stringr::str_split(df$Path, "/|\\\\")
   maxDepth <- max(vapply(paths, length, integer(1)))
 
   tidyr::separate(
     df,
     "Path",
-    into = paste0("Level", 1:maxDepth),
-    fill = "left",
+    into = paste0("Level", 1:(maxDepth)),
+    fill = "right",
     sep = "[/]|[\\]|[\\\\]"
-  )
+  ) %>%
+    dplyr::mutate(Source = source_name) %>%
+    dplyr::select(tidyselect::starts_with("Level"), Source, Function)
 }

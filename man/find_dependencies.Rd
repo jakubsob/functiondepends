@@ -25,6 +25,6 @@ A tibble with columns:
 }
 \description{
 This function finds function calls inside a function with given name. Be aware that
-any variable that has a name that overwrites a function name will be registered as
-a function call. Use with caution.
+any variable that has a name that overwrites a function name will be recognised as
+a function call.
 }

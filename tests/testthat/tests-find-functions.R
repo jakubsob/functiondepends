@@ -2,23 +2,22 @@ test_that("find_functions: Empty directory", {
   dir.create(tempdir(), showWarnings = FALSE)
   empty_dir <- file.path(tempdir(), "empty_dir")
   dir.create(empty_dir, showWarnings = FALSE)
+  expect_message(find_functions(empty_dir))
   expect_equal(find_functions(empty_dir), NULL)
 })
 
 test_that("find_dependencies: side effects", {
   dir.create(file.path(tempdir(), "find_functions"), showWarnings = FALSE)
-  code <- "
-  add <- function(x, y) {
+  code <- "add <- function(x, y) {
     sum <- x + y
     assign('sum', sum)
     sum
   }
   x <- 1
-  y <- 1
-  "
+  y <- 1"
   write(code, file.path(tempdir(), "find_functions", "side_effects.R"))
   envir <- new.env()
-  find_functions(file.path(tempdir(), "find_functions"), envir = envir)
+  functions <- find_functions(file.path(tempdir(), "find_functions"), envir = envir)
   expect_equal(ls(envir), "add")
 })
 
