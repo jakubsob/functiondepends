@@ -1,7 +1,7 @@
 Package: functiondepends
 Type: Package
 Title: Find functions and their dependencies
-Version: 0.1.2
+Version: 0.2.0
 Authors@R: person(
     "Jakub",
     "Sobolewski",
