@@ -1,45 +1,28 @@
 ---
-output: github_document
+title: "Functiondepends - usage"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Functiondepends - usage}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
-
-<!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "man/figures/README-",
   out.width = "100%",
   message = FALSE,
-  warning = FALSE
+  warning = FALSE,
+  fig.width = 10, 
+  fig.height = 5,
+  fig.fullwidth = TRUE
 )
 ```
 
-# functiondepends <img src="man/figures/logo.png" align="right" width="120" />
-
-<!-- badges: start -->
-[![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
-[![Travis build status](https://travis-ci.com/WelcomeToMyVirtualHome/functiondepends.svg?branch=master)](https://travis-ci.com/WelcomeToMyVirtualHome/functiondepends)
-[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/WelcomeToMyVirtualHome/functiondepends?branch=master&svg=true)](https://ci.appveyor.com/project/WelcomeToMyVirtualHome/functiondepends)
-[![codecov](https://codecov.io/gh/WelcomeToMyVirtualHome/functiondepends/branch/master/graph/badge.svg)](https://codecov.io/gh/WelcomeToMyVirtualHome/functiondepends)
-<!-- badges: end -->
-
-The goal of functiondepends is to allow for tidy exploration of unstructured codebase without evaluation of code. 
-
-## Installation
-
-One can install `functiondepends` from GitHub with:
-
-```{r, eval = FALSE}
-# install.packages("devtools")
-devtools::install_github("WelcomeToMyVirtualHome/functiondepends")
-```
-
-```{r}
+```{r setup}
 library(functiondepends)
 ```
-
-## Examples
 
 ```{r, include = FALSE}
 envir <- functiondepends:::envir_example
@@ -49,7 +32,7 @@ functions <- functiondepends:::functions_example
 ```{r, eval = FALSE}
 # Create environment for loaded functions 
 envir <- new.env()
-# Search recursively current directory
+# Search recursively source files
 functions <- find_functions(".", envir = envir, recursive = TRUE)
 ```
 
@@ -59,7 +42,7 @@ functions
 
 Search for dependencies of function `find_functions` within parsed functions:
 
-```{r}
+```{r dependency}
 dependency <- find_dependencies("find_functions", envir = envir, in_envir = TRUE)
 dependency
 ```
@@ -68,7 +51,7 @@ Note that `SourceNamespace` column has value `user-defined` as the functions are
 
 Search for all dependencies of `find_functions` function:
 
-```{r functions_in_path, fig.height=4}
+```{r functions_in_path}
 library(ggplot2)
 library(dplyr)
 
@@ -84,7 +67,7 @@ dependency %>%
 
 Note that name `df` is often used to store object of type `data.frame`. `df` is also a name of F distribution density function from `stats` package. If you suspect that given function ought not to use a specific package, see the source code of function to check the context. To do so, one can execute `find_dependencies` function with `add_info` argument set to `TRUE`.
 
-```{r}
+```{r function_in_path_info}
 library(tidyr)
 
 dependency <- find_dependencies("find_functions", envir = envir, in_envir = FALSE, add_info = TRUE)
@@ -96,7 +79,7 @@ dependency %>%
 
 One can see that indeed `df` is not a call to function `stats::df`.
 
-```{r target_degree, fig.height=4}
+```{r target_degree}
 dependency <- find_dependencies(unique(functions$Function), envir = envir, in_envir = FALSE)
 dependency %>% 
   distinct(Target, TargetInDegree) %>%
@@ -107,7 +90,7 @@ dependency %>%
   labs(caption = "Functions with most function calls.")
 ```
 
-```{r namespace_count, fig.height=4}
+```{r namespace_count}
 dependency <- find_dependencies(unique(functions$Function), envir = envir, in_envir = FALSE)
 dependency %>% 
   group_by(SourceNamespace) %>% 
@@ -122,14 +105,14 @@ dependency %>%
 
 See which user-defined functions depend most on other user-defined functions within searched codebase.
 
-```{r}
+```{r degree}
 dependency <- find_dependencies(unique(functions$Function), envir = envir, in_envir = TRUE)
 dependency %>% 
   distinct(Target, TargetInDegree) %>% 
   arrange(-TargetInDegree)
 ```
 
-```{r, fig.height=4}
+```{r network}
 library(igraph)
 
 edges <- dependency %>% 
@@ -154,7 +137,7 @@ plot(
 ```
 
 
-```{r network, fig.height=4}
+```{r network_full}
 dependency <- find_dependencies(unique(functions$Function), envir = envir, in_envir = FALSE)
 edges <- dependency %>% 
   select(Source, Target) %>% 

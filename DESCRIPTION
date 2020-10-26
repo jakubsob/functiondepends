@@ -30,3 +30,6 @@ Imports:
     tibble (>= 3.0.3),
     tidyselect (>= 1.1.0)
 RoxygenNote: 7.1.1
+VignetteBuilder: knitr
+Depends: 
+    R (>= 2.10)

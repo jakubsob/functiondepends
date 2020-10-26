@@ -4,7 +4,12 @@
 \alias{find_dependencies}
 \title{Find dependencies}
 \usage{
-find_dependencies(function_name, envir = .GlobalEnv, in_envir = TRUE)
+find_dependencies(
+  function_name,
+  envir = .GlobalEnv,
+  in_envir = TRUE,
+  add_info = FALSE
+)
 }
 \arguments{
 \item{function_name}{Character, name of function}
@@ -12,14 +17,19 @@ find_dependencies(function_name, envir = .GlobalEnv, in_envir = TRUE)
 \item{envir}{Environment in which to search for function. Deafult is \code{.GlobalEnv}}
 
 \item{in_envir}{Logical, whether to return only functions that are loaded into \code{envir}}
+
+\item{add_info}{Logical, whether to add list column with line numbers of given function call
+in function body and a list column with context of said calls. Default is \code{FALSE}.}
 }
 \value{
 A tibble with columns:
     - Source: character, name of function called inside `Target`
     - SourceRep: integer, number of times `Source` is called
-    - Namespace: character, name of namespace from which the function comes, if
+    - SourceNamespace: character, name of namespace from which the function comes, if
         a function is defined in multiple namespaces then it is a vector. If function
         is user defined `Namespace` is NA.
+    - SourcePosition: optional, integer list with positions of `Source` calls in body
+    - SouceContext: optional, character list with lines of code with calls of `Source`
     - Target: character, name of inspected function
     - TargetInDegree: integer, number of function calls inside of function body
 }

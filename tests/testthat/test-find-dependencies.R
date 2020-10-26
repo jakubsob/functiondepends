@@ -1,4 +1,4 @@
-test_that("find_dependencies: 1 dependency", {
+test_that("1 dependency", {
   dir.create(file.path(tempdir(), "find_dependencies"), showWarnings = FALSE)
   code <- "add <- function(x, y) {
     x + y
@@ -15,14 +15,14 @@ test_that("find_dependencies: 1 dependency", {
     tibble::tibble(
       Source = "add",
       SourceRep = 2,
-      Namespace = NA,
+      SourceNamespace = "user-defined",
       Target = "add_two",
       TargetInDegree = 1
     )
   )
 })
 
-test_that("find_dependencies: no dependencies", {
+test_that("0 dependencies", {
   dir.create(file.path(tempdir(), "find_dependencies"), showWarnings = FALSE)
   code <- "
   add <- function(x, y) {
@@ -37,9 +37,14 @@ test_that("find_dependencies: no dependencies", {
     tibble::tibble(
       Source = NA,
       SourceRep = 0,
-      Namespace = NA,
+      SourceNamespace = "user-defined",
       Target = "add",
-      TargetInDegree = 1
+      TargetInDegree = 0
     )
   )
+})
+
+test_that("no function", {
+  expect_message(find_dependencies("x", envir = new.env()), "No x in given environment")
+  expect_equal(find_dependencies("x", envir = new.env()), tibble::tibble())
 })
