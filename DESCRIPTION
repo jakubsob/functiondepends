@@ -1,16 +1,15 @@
 Package: functiondepends
 Type: Package
-Title: Find functions and their dependencies
-Version: 0.2.0
+Title: Find Functions and their Dependencies
+Version: 0.2.1
 Authors@R: person(
     "Jakub",
     "Sobolewski",
     email = "jakupsob@gmail.com",
     role = c("aut", "cre"))
-Description: The purpose of this package is to find functions in unstructured directory
-     and to find dependencies between user-defined functions found in given directory.
-     Sourcing of R files is performed without side-effects i.e. from R scripts that have
-     executable code and function definitions only function definitions will be evaluated.
+Description: Find functions in an unstructured directory and explore their dependencies. 
+    Sourcing of R source files is performed without side-effects: from R scripts that have 
+    executable code and function definitions only functions are sourced. 
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
