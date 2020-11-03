@@ -5,13 +5,16 @@
 
 <!-- badges: start -->
 
-[![Lifecycle:
-maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![Travis build
 status](https://travis-ci.com/WelcomeToMyVirtualHome/functiondepends.svg?branch=master)](https://travis-ci.com/WelcomeToMyVirtualHome/functiondepends)
 [![AppVeyor build
 status](https://ci.appveyor.com/api/projects/status/github/WelcomeToMyVirtualHome/functiondepends?branch=master&svg=true)](https://ci.appveyor.com/project/WelcomeToMyVirtualHome/functiondepends)
 [![codecov](https://codecov.io/gh/WelcomeToMyVirtualHome/functiondepends/branch/master/graph/badge.svg)](https://codecov.io/gh/WelcomeToMyVirtualHome/functiondepends)
+[![license](https://img.shields.io/badge/license-mit-lightgrey.svg)](https://choosealicense.com/)
+[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/functiondepends)](https://cran.r-project.org/package=functiondepends)
+[![CRAN\_latest\_release\_date](https://www.r-pkg.org/badges/last-release/functiondepends)](https://cran.r-project.org/package=functiondepends)
+[![metacran
+downloads](https://cranlogs.r-pkg.org/badges/functiondepends)](https://cran.r-project.org/package=functiondepends)
 <!-- badges: end -->
 
 The goal of functiondepends is to allow for tidy exploration of
