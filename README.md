@@ -6,15 +6,16 @@
 <!-- badges: start -->
 
 [![Travis build
-status](https://travis-ci.com/WelcomeToMyVirtualHome/functiondepends.svg?branch=master)](https://travis-ci.com/WelcomeToMyVirtualHome/functiondepends)
+status](https://img.shields.io/travis/com/WelcomeToMyVirtualHome/functiondepends.svg?logo=travis)](https://travis-ci.com/WelcomeToMyVirtualHome/functiondepends)
 [![AppVeyor build
 status](https://ci.appveyor.com/api/projects/status/github/WelcomeToMyVirtualHome/functiondepends?branch=master&svg=true)](https://ci.appveyor.com/project/WelcomeToMyVirtualHome/functiondepends)
 [![codecov](https://codecov.io/gh/WelcomeToMyVirtualHome/functiondepends/branch/master/graph/badge.svg)](https://codecov.io/gh/WelcomeToMyVirtualHome/functiondepends)
 [![license](https://img.shields.io/badge/license-mit-lightgrey.svg)](https://choosealicense.com/)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/functiondepends)](https://cran.r-project.org/package=functiondepends)
 [![CRAN\_latest\_release\_date](https://www.r-pkg.org/badges/last-release/functiondepends)](https://cran.r-project.org/package=functiondepends)
-[![metacran
-downloads](https://cranlogs.r-pkg.org/badges/functiondepends)](https://cran.r-project.org/package=functiondepends)
+[![CRAN
+status](https://cranlogs.r-pkg.org/badges/grand-total/functiondepends)](https://CRAN.R-project.org/package=functiondepends)
+
 <!-- badges: end -->
 
 The goal of functiondepends is to allow for tidy exploration of
@@ -22,20 +23,23 @@ unstructured codebase without evaluation of code.
 
 ## Installation
 
-One can install `functiondepends` from GitHub with:
+One can install `functiondepends` from CRAN:
+
+``` r
+install.packages("functiondepends")
+```
+
+or development version from GitHub:
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("WelcomeToMyVirtualHome/functiondepends")
 ```
 
-``` r
-library(functiondepends)
-```
-
 ## Examples
 
 ``` r
+library(functiondepends)
 # Create environment for loaded functions 
 envir <- new.env()
 # Search recursively current directory
