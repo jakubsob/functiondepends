@@ -48,11 +48,12 @@ is_assign <- function(expr) {
 #' @param path Character, path to folder
 #' @param envir Environment to source loaded functions into
 #' @param recursive Logical, whether to search files recursively
+#' @param separate_path Logical, whether to split path into hierarchy of directories. Produces
+#'     multiple character columns with 'Level' prefix.
 #'
 #' @export
 #' @return A tibble with character columns indicating path to source files and names of functions
-#'     defined in them. Path elements are split into columns with `Level` prefix,
-#'     name of source file is in `Source` column, name of function is in `Function` column.
+#'     defined in them.
 #'
 #' @examples
 #' \donttest{
@@ -73,7 +74,13 @@ is_assign <- function(expr) {
 #' find_functions(path)
 #' }
 #' @importFrom magrittr %>%
-find_functions <- function(path, envir = .GlobalEnv, recursive = TRUE) {
+find_functions <- function(path, envir = new.env(), recursive = TRUE, separate_path = FALSE) {
+
+  if (!dir.exists(path)) {
+    message("Directory does not exist")
+    return(invisible(NULL))
+  }
+
   sourceFiles <- list.files(
     path,
     full.names = TRUE,
@@ -82,17 +89,17 @@ find_functions <- function(path, envir = .GlobalEnv, recursive = TRUE) {
   )
 
   if (length(sourceFiles) == 0) {
-    message("No .R files in directory")
-    return(NULL)
+    message("No R files in directory")
+    return(invisible(NULL))
   }
 
-  df <- purrr::map_dfr(sourceFiles, ~ {
-    fileParsed <- parse(.x)
+  df <- purrr::map_dfr(sourceFiles, function(file) {
+    fileParsed <- parse(file)
     funcs <- Filter(is_function, fileParsed)
-    funcsNames <- unlist(Map(get_function_name, funcs))
+    funcsNames <- purrr::map_chr(funcs, get_function_name)
     if (length(funcsNames) == 0) return(NULL)
     purrr::map(funcs, eval, envir = envir)
-    tibble::tibble(Path = .x, Function = funcsNames)
+    tibble::tibble(Path = file, Function = funcsNames)
   })
 
   source_name <- basename(df$Path)
@@ -105,16 +112,19 @@ find_functions <- function(path, envir = .GlobalEnv, recursive = TRUE) {
       Path = stringr::str_remove(Path, "/$|\\\\$")
     )
 
-  paths <- stringr::str_split(df$Path, "/|\\\\")
-  maxDepth <- max(vapply(paths, length, integer(1)))
+  if (separate_path) {
+    paths <- stringr::str_split(df$Path, "/|\\\\")
+    maxDepth <- max(purrr::map_int(paths, length))
+    df <- tidyr::separate(
+      df,
+      "Path",
+      into = paste0("Level", 1:(maxDepth)),
+      fill = "right",
+      sep = "[/]|[\\]|[\\\\]"
+    ) %>%
+      dplyr::select(tidyselect::starts_with("Level"), Function)
+  }
 
-  tidyr::separate(
-    df,
-    "Path",
-    into = paste0("Level", 1:(maxDepth)),
-    fill = "right",
-    sep = "[/]|[\\]|[\\\\]"
-  ) %>%
-    dplyr::mutate(Source = source_name) %>%
-    dplyr::select(tidyselect::starts_with("Level"), Source, Function)
+  df %>%
+    dplyr::mutate(Source = source_name)
 }
