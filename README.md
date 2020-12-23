@@ -6,12 +6,12 @@
 <!-- badges: start -->
 
 [![Travis build
-status](https://img.shields.io/travis/com/WelcomeToMyVirtualHome/functiondepends.svg?logo=travis)](https://travis-ci.com/WelcomeToMyVirtualHome/functiondepends)
+status](https://img.shields.io/travis/com/jakubsob/functiondepends.svg?logo=travis)](https://travis-ci.com/jakubsob/functiondepends)
 [![AppVeyor build
-status](https://ci.appveyor.com/api/projects/status/github/WelcomeToMyVirtualHome/functiondepends?branch=master&svg=true)](https://ci.appveyor.com/project/WelcomeToMyVirtualHome/functiondepends)
+status](https://ci.appveyor.com/api/projects/status/github/jakubsob/functiondepends?branch=master&svg=true)](https://ci.appveyor.com/project/jakubsob/functiondepends)
 [![R build
-status](https://github.com/WelcomeToMyVirtualHome/functiondepends/workflows/R-CMD-check/badge.svg)](https://github.com/WelcomeToMyVirtualHome/functiondepends/actions)
-[![codecov](https://codecov.io/gh/WelcomeToMyVirtualHome/functiondepends/branch/master/graph/badge.svg)](https://codecov.io/gh/WelcomeToMyVirtualHome/functiondepends)
+status](https://github.com/jakubsob/functiondepends/workflows/R-CMD-check/badge.svg)](https://github.com/jakubsob/functiondepends/actions)
+[![codecov](https://codecov.io/gh/jakubsob/functiondepends/branch/master/graph/badge.svg)](https://codecov.io/gh/jakubsob/functiondepends)
 [![license](https://img.shields.io/badge/license-mit-lightgrey.svg)](https://choosealicense.com/)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/functiondepends)](https://cran.r-project.org/package=functiondepends)
 [![CRAN\_latest\_release\_date](https://www.r-pkg.org/badges/last-release/functiondepends)](https://cran.r-project.org/package=functiondepends)
@@ -38,7 +38,7 @@ or development version from GitHub:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("WelcomeToMyVirtualHome/functiondepends")
+devtools::install_github("jakubsob/functiondepends")
 ```
 
 ## Examples
@@ -192,7 +192,7 @@ plot(
 )
 ```
 
-<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
+<img src="man/figures/README-network_env-1.png" width="100%" />
 
 ``` r
 dependency <- find_dependencies(unique(functions$Function), envir = envir, in_envir = FALSE)
