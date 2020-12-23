@@ -48,7 +48,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -99,7 +99,7 @@
 <p>or development version from GitHub:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"WelcomeToMyVirtualHome/functiondepends"</span><span class="op">)</span></code></pre></div>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"jakubsob/functiondepends"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="examples" class="section level2">
 <h2 class="hasAnchor">
@@ -218,7 +218,7 @@
   edge.arrow.size <span class="op">=</span> <span class="fl">.4</span>,
   main <span class="op">=</span> <span class="st">"Functions dependency graph"</span>
 <span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-10-1.png" width="100%"></p>
+<p><img src="reference/figures/README-network_env-1.png" width="100%"></p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dependency</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/find_dependencies.html">find_dependencies</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">functions</span><span class="op">$</span><span class="va">Function</span><span class="op">)</span>, envir <span class="op">=</span> <span class="va">envir</span>, in_envir <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">edges</span> <span class="op">&lt;-</span> <span class="va">dependency</span> <span class="op">%&gt;%</span> 
@@ -268,10 +268,10 @@
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://travis-ci.com/WelcomeToMyVirtualHome/functiondepends"><img src="https://img.shields.io/travis/com/WelcomeToMyVirtualHome/functiondepends.svg?logo=travis" alt="Travis build status"></a></li>
-<li><a href="https://ci.appveyor.com/project/WelcomeToMyVirtualHome/functiondepends"><img src="https://ci.appveyor.com/api/projects/status/github/WelcomeToMyVirtualHome/functiondepends?branch=master&amp;svg=true" alt="AppVeyor build status"></a></li>
-<li><a href="https://github.com/WelcomeToMyVirtualHome/functiondepends/actions"><img src="https://github.com/WelcomeToMyVirtualHome/functiondepends/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
-<li><a href="https://codecov.io/gh/WelcomeToMyVirtualHome/functiondepends"><img src="https://codecov.io/gh/WelcomeToMyVirtualHome/functiondepends/branch/master/graph/badge.svg" alt="codecov"></a></li>
+<li><a href="https://travis-ci.com/jakubsob/functiondepends"><img src="https://img.shields.io/travis/com/jakubsob/functiondepends.svg?logo=travis" alt="Travis build status"></a></li>
+<li><a href="https://ci.appveyor.com/project/jakubsob/functiondepends"><img src="https://ci.appveyor.com/api/projects/status/github/jakubsob/functiondepends?branch=master&amp;svg=true" alt="AppVeyor build status"></a></li>
+<li><a href="https://github.com/jakubsob/functiondepends/actions"><img src="https://github.com/jakubsob/functiondepends/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li><a href="https://codecov.io/gh/jakubsob/functiondepends"><img src="https://codecov.io/gh/jakubsob/functiondepends/branch/master/graph/badge.svg" alt="codecov"></a></li>
 <li><a href="https://choosealicense.com/"><img src="https://img.shields.io/badge/license-mit-lightgrey.svg" alt="license"></a></li>
 <li><a href="https://cran.r-project.org/package=functiondepends"><img src="https://www.r-pkg.org/badges/version/functiondepends" alt="CRAN_Status_Badge"></a></li>
 <li><a href="https://cran.r-project.org/package=functiondepends"><img src="https://www.r-pkg.org/badges/last-release/functiondepends" alt="CRAN_latest_release_date"></a></li>
