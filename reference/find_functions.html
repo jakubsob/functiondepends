@@ -81,7 +81,7 @@ as it doesn't source the whole file, just functions. There are no side-effects t
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">functiondepends</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -137,7 +137,12 @@ as it doesn't source the whole file, just functions. There are no side-effects t
 as it doesn't source the whole file, just functions. There are no side-effects to sourcing .R files.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>find_functions</span><span class='op'>(</span><span class='va'>path</span>, envir <span class='op'>=</span> <span class='va'>.GlobalEnv</span>, recursive <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>find_functions</span><span class='op'>(</span>
+  <span class='va'>path</span>,
+  envir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/environment.html'>new.env</a></span><span class='op'>(</span><span class='op'>)</span>,
+  recursive <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  separate_path <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -154,13 +159,17 @@ as it doesn't source the whole file, just functions. There are no side-effects t
       <th>recursive</th>
       <td><p>Logical, whether to search files recursively</p></td>
     </tr>
+    <tr>
+      <th>separate_path</th>
+      <td><p>Logical, whether to split path into hierarchy of directories. Produces
+multiple character columns with 'Level' prefix.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A tibble with character columns indicating path to source files and names of functions
-    defined in them. Path elements are split into columns with `Level` prefix,
-    name of source file is in `Source` column, name of function is in `Function` column.</p>
+    defined in them.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
@@ -179,12 +188,12 @@ assign('add_two', function(x) {
 "</span>
 <span class='fu'><a href='https://rdrr.io/r/base/write.html'>write</a></span><span class='op'>(</span><span class='va'>code</span>, <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='va'>path</span>, <span class='st'>"code.R"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'>find_functions</span><span class='op'>(</span><span class='va'>path</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 3 x 10</span><span>
-#&gt;   Level1 Level2  Level3 Level4     Level5 Level6 Level7 Level8   Source Function
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   
-#&gt; </span><span style='color: #555555;'>1</span><span> var    folders 24     8k48jl6d2… T      </span><span style='color: #555555;'>""</span><span>     Rtmp7… find_fu… code.R add     
-#&gt; </span><span style='color: #555555;'>2</span><span> var    folders 24     8k48jl6d2… T      </span><span style='color: #555555;'>""</span><span>     Rtmp7… find_fu… code.R add_one 
-#&gt; </span><span style='color: #555555;'>3</span><span> var    folders 24     8k48jl6d2… T      </span><span style='color: #555555;'>""</span><span>     Rtmp7… find_fu… code.R add_two </div><div class='input'><span class='co'># }</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 3 x 3</span><span>
+#&gt;   Path                                                       Function SourceFile
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                                      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     
+#&gt; </span><span style='color: #555555;'>1</span><span> var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmpt8g0… add      code.R    
+#&gt; </span><span style='color: #555555;'>2</span><span> var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmpt8g0… add_one  code.R    
+#&gt; </span><span style='color: #555555;'>3</span><span> var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmpt8g0… add_two  code.R    </div><div class='input'><span class='co'># }</span>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
