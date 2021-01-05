@@ -81,25 +81,25 @@ find_functions <- function(path, envir = new.env(), recursive = TRUE, separate_p
     return(invisible(NULL))
   }
 
-  sourceFiles <- list.files(
+  source_files <- list.files(
     path,
     full.names = TRUE,
     recursive = recursive,
     pattern = ".R$"
   )
 
-  if (length(sourceFiles) == 0) {
+  if (length(source_files) == 0) {
     message("No R files in directory")
     return(invisible(NULL))
   }
 
-  df <- purrr::map_dfr(sourceFiles, function(file) {
-    fileParsed <- parse(file)
-    funcs <- Filter(is_function, fileParsed)
-    funcsNames <- purrr::map_chr(funcs, get_function_name)
-    if (length(funcsNames) == 0) return(NULL)
+  df <- purrr::map_dfr(source_files, function(file) {
+    file_parsed <- parse(file)
+    funcs <- Filter(is_function, file_parsed)
+    funcs_names <- purrr::map_chr(funcs, get_function_name)
+    if (length(funcs_names) == 0) return(NULL)
     purrr::map(funcs, eval, envir = envir)
-    tibble::tibble(Path = file, Function = funcsNames)
+    tibble::tibble(Path = file, Function = funcs_names)
   })
 
   source_name <- basename(df$Path)
@@ -114,11 +114,11 @@ find_functions <- function(path, envir = new.env(), recursive = TRUE, separate_p
 
   if (separate_path) {
     paths <- stringr::str_split(df$Path, "/|\\\\")
-    maxDepth <- max(purrr::map_int(paths, length))
+    max_depth <- max(purrr::map_int(paths, length))
     df <- tidyr::separate(
       df,
       "Path",
-      into = paste0("Level", 1:(maxDepth)),
+      into = paste0("Level", 1:(max_depth)),
       fill = "right",
       sep = "[/]|[\\]|[\\\\]"
     ) %>%
@@ -126,5 +126,5 @@ find_functions <- function(path, envir = new.env(), recursive = TRUE, separate_p
   }
 
   df %>%
-    dplyr::mutate(Source = source_name)
+    dplyr::mutate(SourceFile = source_name)
 }

@@ -45,15 +45,14 @@ or development version from GitHub:
 
 ```{r, eval = FALSE}
 # install.packages("devtools")
-devtools::install_github("WelcomeToMyVirtualHome/functiondepends")
+devtools::install_github("jakubsob/functiondepends")
 ```
-
 
 ## Examples
 
 ```{r, include = FALSE}
-envir <- functiondepends:::envir_example
-functions <- functiondepends:::functions_example
+envir <- functiondepends:::envir
+functions <- functiondepends:::functions
 ```
 
 ```{r, eval = FALSE}
@@ -140,7 +139,7 @@ dependency %>%
   arrange(-TargetInDegree)
 ```
 
-```{r, fig.height=4}
+```{r network_env, fig.height=4}
 library(igraph)
 
 edges <- dependency %>% 

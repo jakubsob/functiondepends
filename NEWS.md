@@ -1,3 +1,9 @@
+# functiondepends 0.2.2
+
+* Changed `find_functions` usage to return non-separated path of source file by default.
+
+* Changed column in tibble returned by `find_functions` from Source to SourceFile
+
 # functiondepends 0.2.1
 
 * CRAN description fixes.
