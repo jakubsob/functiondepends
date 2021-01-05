@@ -4,7 +4,12 @@
 \alias{find_functions}
 \title{Functions in path}
 \usage{
-find_functions(path, envir = .GlobalEnv, recursive = TRUE)
+find_functions(
+  path,
+  envir = new.env(),
+  recursive = TRUE,
+  separate_path = FALSE
+)
 }
 \arguments{
 \item{path}{Character, path to folder}
@@ -12,11 +17,13 @@ find_functions(path, envir = .GlobalEnv, recursive = TRUE)
 \item{envir}{Environment to source loaded functions into}
 
 \item{recursive}{Logical, whether to search files recursively}
+
+\item{separate_path}{Logical, whether to split path into hierarchy of directories. Produces
+multiple character columns with 'Level' prefix.}
 }
 \value{
 A tibble with character columns indicating path to source files and names of functions
-    defined in them. Path elements are split into columns with `Level` prefix,
-    name of source file is in `Source` column, name of function is in `Function` column.
+    defined in them.
 }
 \description{
 Parses files in given path. It searches for functions and loads them. Is safe for use with scripts

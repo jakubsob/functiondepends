@@ -48,12 +48,11 @@ or development version from GitHub:
 devtools::install_github("jakubsob/functiondepends")
 ```
 
-
 ## Examples
 
 ```{r, include = FALSE}
-envir <- functiondepends:::envir_example
-functions <- functiondepends:::functions_example
+envir <- functiondepends:::envir
+functions <- functiondepends:::functions
 ```
 
 ```{r, eval = FALSE}
