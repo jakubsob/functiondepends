@@ -101,12 +101,14 @@
 <span class="va">functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_functions.html">find_functions</a></span><span class="op">(</span><span class="st">"."</span>, envir <span class="op">=</span> <span class="va">envir</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">functions</span>
-<span class="co">#&gt;   Path          Function          SourceFile</span>
-<span class="co">#&gt; 1    R find_dependencies find-dependencies.R</span>
-<span class="co">#&gt; 2    R       is_function    find-functions.R</span>
-<span class="co">#&gt; 3    R get_function_name    find-functions.R</span>
-<span class="co">#&gt; 4    R         is_assign    find-functions.R</span>
-<span class="co">#&gt; 5    R    find_functions    find-functions.R</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 5 x 3</span>
+<span class="co">#&gt;   Path  Function          SourceFile         </span>
+<span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt;             &lt;chr&gt;              </span>
+<span class="co">#&gt; 1 R     find_dependencies find-dependencies.R</span>
+<span class="co">#&gt; 2 R     is_function       find-functions.R   </span>
+<span class="co">#&gt; 3 R     get_function_name find-functions.R   </span>
+<span class="co">#&gt; 4 R     is_assign         find-functions.R   </span>
+<span class="co">#&gt; 5 R     find_functions    find-functions.R</span></code></pre></div>
 <p>Search for dependencies of function <code>find_functions</code> within parsed functions:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dependency</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_dependencies.html">find_dependencies</a></span><span class="op">(</span><span class="st">"find_functions"</span>, envir <span class="op">=</span> <span class="va">envir</span>, in_envir <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
