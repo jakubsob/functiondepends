@@ -74,6 +74,12 @@ is_assign <- function(expr) {
 #' find_functions(path)
 #' }
 #' @importFrom magrittr %>%
+#' @importFrom purrr map_dfr map_chr map map_int
+#' @importFrom tibble tibble
+#' @importFrom dplyr mutate select
+#' @importFrom stringr str_remove str_split
+#' @importFrom tidyr separate
+#' @importFrom tidyselect starts_with
 find_functions <- function(path, envir = new.env(), recursive = TRUE, separate_path = FALSE) {
 
   if (!dir.exists(path)) {
@@ -93,38 +99,37 @@ find_functions <- function(path, envir = new.env(), recursive = TRUE, separate_p
     return(invisible(NULL))
   }
 
-  df <- purrr::map_dfr(source_files, function(file) {
+  df <- map_dfr(source_files, function(file) {
     file_parsed <- parse(file)
     funcs <- Filter(is_function, file_parsed)
-    funcs_names <- purrr::map_chr(funcs, get_function_name)
+    funcs_names <- map_chr(funcs, get_function_name)
     if (length(funcs_names) == 0) return(NULL)
-    purrr::map(funcs, eval, envir = envir)
-    tibble::tibble(Path = file, Function = funcs_names)
+    map(funcs, eval, envir = envir)
+    tibble(Path = file, Function = funcs_names)
   })
 
   source_name <- basename(df$Path)
   Path <- Source <- Function <- NULL
 
   df <- df %>%
-    dplyr::mutate(
-      Path = stringr::str_remove(Path, "^\\./|^/|^\\\\|^\\."),
-      Path = stringr::str_remove(Path, source_name),
-      Path = stringr::str_remove(Path, "/$|\\\\$")
+    mutate(
+      Path = str_remove(Path, "^\\./|^/|^\\\\|^\\."),
+      Path = str_remove(Path, source_name),
+      Path = str_remove(Path, "/$|\\\\$")
     )
 
   if (separate_path) {
-    paths <- stringr::str_split(df$Path, "/|\\\\")
-    max_depth <- max(purrr::map_int(paths, length))
-    df <- tidyr::separate(
+    paths <- str_split(df$Path, "/|\\\\")
+    max_depth <- max(map_int(paths, length))
+    df <- separate(
       df,
       "Path",
       into = paste0("Level", 1:(max_depth)),
       fill = "right",
       sep = "[/]|[\\]|[\\\\]"
     ) %>%
-      dplyr::select(tidyselect::starts_with("Level"), Function)
+      select(starts_with("Level"), Function)
   }
 
-  df %>%
-    dplyr::mutate(SourceFile = source_name)
+  df %>% mutate(SourceFile = source_name)
 }

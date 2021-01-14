@@ -23,9 +23,12 @@
 #'     - TargetInDegree: integer, number of function calls inside of function body
 #'
 #' @importFrom magrittr %>%
+#' @importFrom stringr str_extract_all str_remove_all str_split str_locate str_sub
+#' @importFrom tibble tibble as_tibble
+#' @importFrom dplyr group_by tally filter bind_cols mutate select rowwise ungroup
 find_dependencies <- function(function_name, envir = .GlobalEnv, in_envir = TRUE, add_info = FALSE) {
 
-  purrr::map_dfr(function_name, ~ {
+  map_dfr(function_name, ~ {
     func <- tryCatch(
       get(.x, envir = envir),
       error = function(e) NULL
