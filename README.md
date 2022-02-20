@@ -13,14 +13,15 @@ status](https://ci.appveyor.com/api/projects/status/github/jakubsob/functiondepe
 status](https://github.com/jakubsob/functiondepends/workflows/R-CMD-check/badge.svg)](https://github.com/jakubsob/functiondepends/actions)
 [![codecov](https://codecov.io/gh/jakubsob/functiondepends/branch/master/graph/badge.svg)](https://codecov.io/gh/jakubsob/functiondepends)
 [![license](https://img.shields.io/badge/license-mit-lightgrey.svg)](https://choosealicense.com/)
-[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/functiondepends)](https://cran.r-project.org/package=functiondepends)
-[![CRAN\_latest\_release\_date](https://www.r-pkg.org/badges/last-release/functiondepends)](https://cran.r-project.org/package=functiondepends)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/functiondepends)](https://cran.r-project.org/package=functiondepends)
+[![CRAN_latest_release_date](https://www.r-pkg.org/badges/last-release/functiondepends)](https://cran.r-project.org/package=functiondepends)
 [![CRAN
 status](https://cranlogs.r-pkg.org/badges/grand-total/functiondepends)](https://CRAN.R-project.org/package=functiondepends)
 [![Code Quality
 Score](https://www.code-inspector.com/project/16425/score/svg)](https://frontend.code-inspector.com/public/project/16425/functiondepends/dashboard)
 [![Code Quality
 Score](https://www.code-inspector.com/project/16425/status/svg)](https://frontend.code-inspector.com/public/project/16425/functiondepends/dashboard)
+[![R-CMD-check](https://github.com/jakubsob/functiondepends/workflows/R-CMD-check/badge.svg)](https://github.com/jakubsob/functiondepends/actions)
 <!-- badges: end -->
 
 The goal of functiondepends is to allow for tidy exploration of
@@ -53,12 +54,14 @@ functions <- find_functions(".", envir = envir, recursive = TRUE)
 
 ``` r
 functions
-#>   Path          Function          SourceFile
-#> 1    R find_dependencies find-dependencies.R
-#> 2    R       is_function    find-functions.R
-#> 3    R get_function_name    find-functions.R
-#> 4    R         is_assign    find-functions.R
-#> 5    R    find_functions    find-functions.R
+#> # A tibble: 5 × 3
+#>   Path  Function          SourceFile         
+#>   <chr> <chr>             <chr>              
+#> 1 R     find_dependencies find-dependencies.R
+#> 2 R     is_function       find-functions.R   
+#> 3 R     get_function_name find-functions.R   
+#> 4 R     is_assign         find-functions.R   
+#> 5 R     find_functions    find-functions.R
 ```
 
 Search for dependencies of function `find_functions` within parsed
@@ -67,7 +70,7 @@ functions:
 ``` r
 dependency <- find_dependencies("find_functions", envir = envir, in_envir = TRUE)
 dependency
-#> # A tibble: 2 x 5
+#> # A tibble: 2 × 5
 #>   Source            SourceRep SourceNamespace Target         TargetInDegree
 #>   <chr>                 <int> <chr>           <chr>                   <int>
 #> 1 get_function_name         1 user-defined    find_functions              2
@@ -110,14 +113,14 @@ dependency %>%
   filter(SourceNamespace == "stats") %>% 
   select(Source, SourcePosition, SourceContext) %>% 
   unnest(c(SourcePosition, SourceContext)) 
-#> # A tibble: 6 x 3
+#> # A tibble: 6 × 3
 #>   Source SourcePosition SourceContext                                           
 #>   <chr>           <dbl> <chr>                                                   
 #> 1 df                 10 "    df <- purrr::map_dfr(sourceFiles, function(file) {"
 #> 2 df                 19 "    source_name <- basename(df$Path)"                  
-#> 3 df                 21 "    df <- df %>% dplyr::mutate(Path = stringr::str_rem~
-#> 4 df                 23 "        paths <- stringr::str_split(df$Path, \"/|\\\\\~
-#> 5 df                 25 "        df <- tidyr::separate(df, \"Path\", into = pas~
+#> 3 df                 21 "    df <- df %>% dplyr::mutate(Path = stringr::str_rem…
+#> 4 df                 23 "        paths <- stringr::str_split(df$Path, \"/|\\\\\…
+#> 5 df                 25 "        df <- tidyr::separate(df, \"Path\", into = pas…
 #> 6 df                 27 "    df %>% dplyr::mutate(SourceFile = source_name)"
 ```
 
@@ -159,7 +162,7 @@ dependency <- find_dependencies(unique(functions$Function), envir = envir, in_en
 dependency %>% 
   distinct(Target, TargetInDegree) %>% 
   arrange(-TargetInDegree)
-#> # A tibble: 5 x 2
+#> # A tibble: 5 × 2
 #>   Target            TargetInDegree
 #>   <chr>                      <dbl>
 #> 1 find_functions                 2
@@ -174,7 +177,7 @@ library(igraph)
 
 edges <- dependency %>% 
   select(Source, Target) %>% 
-  filter(!is.na(.))
+  na.omit()
 
 vertices <- unique(c(dependency$Source, dependency$Target))
 vertices <- vertices[!is.na(vertices)]
@@ -199,7 +202,7 @@ plot(
 dependency <- find_dependencies(unique(functions$Function), envir = envir, in_envir = FALSE)
 edges <- dependency %>% 
   select(Source, Target) %>% 
-  filter(!is.na(.))
+  na.omit()
 vertices <- unique(c(edges$Source, edges$Target))
 
 g <- graph_from_data_frame(edges)

@@ -29,6 +29,7 @@ library(functiondepends)
 [![CRAN status](https://cranlogs.r-pkg.org/badges/grand-total/functiondepends)](https://CRAN.R-project.org/package=functiondepends)
 [![Code Quality Score](https://www.code-inspector.com/project/16425/score/svg)](https://frontend.code-inspector.com/public/project/16425/functiondepends/dashboard)
 [![Code Quality Score](https://www.code-inspector.com/project/16425/status/svg)](https://frontend.code-inspector.com/public/project/16425/functiondepends/dashboard)
+[![R-CMD-check](https://github.com/jakubsob/functiondepends/workflows/R-CMD-check/badge.svg)](https://github.com/jakubsob/functiondepends/actions)
 <!-- badges: end -->
 
 The goal of functiondepends is to allow for tidy exploration of unstructured codebase without evaluation of code. 
@@ -144,7 +145,7 @@ library(igraph)
 
 edges <- dependency %>% 
   select(Source, Target) %>% 
-  filter(!is.na(.))
+  na.omit()
 
 vertices <- unique(c(dependency$Source, dependency$Target))
 vertices <- vertices[!is.na(vertices)]
@@ -168,7 +169,7 @@ plot(
 dependency <- find_dependencies(unique(functions$Function), envir = envir, in_envir = FALSE)
 edges <- dependency %>% 
   select(Source, Target) %>% 
-  filter(!is.na(.))
+  na.omit()
 vertices <- unique(c(edges$Source, edges$Target))
 
 g <- graph_from_data_frame(edges)
