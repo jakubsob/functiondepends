@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,18 +40,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">functiondepends</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -93,117 +89,117 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">functiondepends</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">functiondepends</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Create environment for loaded functions </span>
-<span class="va">envir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/environment.html">new.env</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">envir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/environment.html" class="external-link">new.env</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co"># Search recursively source files</span>
 <span class="va">functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_functions.html">find_functions</a></span><span class="op">(</span><span class="st">"."</span>, envir <span class="op">=</span> <span class="va">envir</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">functions</span>
-<span class="co">#&gt; # A tibble: 5 x 3</span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 3</span></span>
 <span class="co">#&gt;   Path  Function          SourceFile         </span>
-<span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt;             &lt;chr&gt;              </span>
-<span class="co">#&gt; 1 R     find_dependencies find-dependencies.R</span>
-<span class="co">#&gt; 2 R     is_function       find-functions.R   </span>
-<span class="co">#&gt; 3 R     get_function_name find-functions.R   </span>
-<span class="co">#&gt; 4 R     is_assign         find-functions.R   </span>
-<span class="co">#&gt; 5 R     find_functions    find-functions.R</span></code></pre></div>
+<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> R     find_dependencies find-dependencies.R</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> R     is_function       find-functions.R   </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> R     get_function_name find-functions.R   </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> R     is_assign         find-functions.R   </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> R     find_functions    find-functions.R</span></code></pre></div>
 <p>Search for dependencies of function <code>find_functions</code> within parsed functions:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dependency</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_dependencies.html">find_dependencies</a></span><span class="op">(</span><span class="st">"find_functions"</span>, envir <span class="op">=</span> <span class="va">envir</span>, in_envir <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">dependency</span>
-<span class="co">#&gt; # A tibble: 2 x 5</span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 5</span></span>
 <span class="co">#&gt;   Source            SourceRep SourceNamespace Target         TargetInDegree</span>
-<span class="co">#&gt;   &lt;chr&gt;                 &lt;int&gt; &lt;chr&gt;           &lt;chr&gt;                   &lt;int&gt;</span>
-<span class="co">#&gt; 1 get_function_name         1 user-defined    find_functions              2</span>
-<span class="co">#&gt; 2 is_function               1 user-defined    find_functions              2</span></code></pre></div>
+<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> get_function_name         1 user-defined    find_functions              2</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> is_function               1 user-defined    find_functions              2</span></code></pre></div>
 <p>Note that <code>SourceNamespace</code> column has value <code>user-defined</code> as the functions are searched within source of the package.</p>
 <p>Search for all dependencies of <code>find_functions</code> function:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
 
 <span class="va">dependency</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_dependencies.html">find_dependencies</a></span><span class="op">(</span><span class="st">"find_functions"</span>, envir <span class="op">=</span> <span class="va">envir</span>, in_envir <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">dependency</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span><span class="va">SourceRep</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Source <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder</a></span><span class="op">(</span><span class="va">Source</span>, <span class="va">SourceRep</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Source</span>, y <span class="op">=</span> <span class="va">SourceRep</span>, fill <span class="op">=</span> <span class="va">SourceNamespace</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Top 10 most repeated calls in 'find_functions'."</span><span class="op">)</span></code></pre></div>
+<span class="va">dependency</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_max</a></span><span class="op">(</span><span class="va">SourceRep</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Source <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html" class="external-link">reorder</a></span><span class="op">(</span><span class="va">Source</span>, <span class="va">SourceRep</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Source</span>, y <span class="op">=</span> <span class="va">SourceRep</span>, fill <span class="op">=</span> <span class="va">SourceNamespace</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_col</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html" class="external-link">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Top 10 most repeated calls in 'find_functions'."</span><span class="op">)</span></code></pre></div>
 <p><img src="functiondepends-usage_files/figure-html/functions_in_path-1.png" width="100%"></p>
 <p>Note that name <code>df</code> is often used to store object of type <code>data.frame</code>. <code>df</code> is also a name of F distribution density function from <code>stats</code> package. If you suspect that given function ought not to use a specific package, see the source code of function to check the context. To do so, one can execute <code>find_dependencies</code> function with <code>add_info</code> argument set to <code>TRUE</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span>
 
 <span class="va">dependency</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_dependencies.html">find_dependencies</a></span><span class="op">(</span><span class="st">"find_functions"</span>, envir <span class="op">=</span> <span class="va">envir</span>, in_envir <span class="op">=</span> <span class="cn">FALSE</span>, add_info <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">dependency</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">SourceNamespace</span> <span class="op">==</span> <span class="st">"stats"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Source</span>, <span class="va">SourcePosition</span>, <span class="va">SourceContext</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">SourcePosition</span>, <span class="va">SourceContext</span><span class="op">)</span><span class="op">)</span> 
-<span class="co">#&gt; # A tibble: 6 x 3</span>
+<span class="va">dependency</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">SourceNamespace</span> <span class="op">==</span> <span class="st">"stats"</span><span class="op">)</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Source</span>, <span class="va">SourcePosition</span>, <span class="va">SourceContext</span><span class="op">)</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html" class="external-link">unnest</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">SourcePosition</span>, <span class="va">SourceContext</span><span class="op">)</span><span class="op">)</span> 
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 3</span></span>
 <span class="co">#&gt;   Source SourcePosition SourceContext                                           </span>
-<span class="co">#&gt;   &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt;                                                   </span>
-<span class="co">#&gt; 1 df                 10 "    df &lt;- purrr::map_dfr(sourceFiles, function(file) {"</span>
-<span class="co">#&gt; 2 df                 19 "    source_name &lt;- basename(df$Path)"                  </span>
-<span class="co">#&gt; 3 df                 21 "    df &lt;- df %&gt;% dplyr::mutate(Path = stringr::str_rem…</span>
-<span class="co">#&gt; 4 df                 23 "        paths &lt;- stringr::str_split(df$Path, \"/|\\\\\…</span>
-<span class="co">#&gt; 5 df                 25 "        df &lt;- tidyr::separate(df, \"Path\", into = pas…</span>
-<span class="co">#&gt; 6 df                 27 "    df %&gt;% dplyr::mutate(SourceFile = source_name)"</span></code></pre></div>
-<p>One can see that indeed <code>df</code> is not a call to function <code><a href="https://rdrr.io/r/stats/Fdist.html">stats::df</a></code>.</p>
+<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                   </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> df                 10 <span style="color: #949494;">"</span>    df &lt;- purrr::map_dfr(sourceFiles, function(file) {<span style="color: #949494;">"</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> df                 19 <span style="color: #949494;">"</span>    source_name &lt;- basename(df$Path)<span style="color: #949494;">"</span>                  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> df                 21 <span style="color: #949494;">"</span>    df &lt;- df %&gt;% dplyr::mutate(Path = stringr::str_rem…</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> df                 23 <span style="color: #949494;">"</span>        paths &lt;- stringr::str_split(df$Path, \"/|\\\\\…</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> df                 25 <span style="color: #949494;">"</span>        df &lt;- tidyr::separate(df, \"Path\", into = pas…</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> df                 27 <span style="color: #949494;">"</span>    df %&gt;% dplyr::mutate(SourceFile = source_name)<span style="color: #949494;">"</span></span></code></pre></div>
+<p>One can see that indeed <code>df</code> is not a call to function <code><a href="https://rdrr.io/r/stats/Fdist.html" class="external-link">stats::df</a></code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">dependency</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_dependencies.html">find_dependencies</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">functions</span><span class="op">$</span><span class="va">Function</span><span class="op">)</span>, envir <span class="op">=</span> <span class="va">envir</span>, in_envir <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">dependency</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="va">Target</span>, <span class="va">TargetInDegree</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Target <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder</a></span><span class="op">(</span><span class="va">Target</span>, <span class="va">TargetInDegree</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Target</span>, y <span class="op">=</span> <span class="va">TargetInDegree</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Functions with most function calls."</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">dependency</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_dependencies.html">find_dependencies</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">functions</span><span class="op">$</span><span class="va">Function</span><span class="op">)</span>, envir <span class="op">=</span> <span class="va">envir</span>, in_envir <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="va">dependency</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">Target</span>, <span class="va">TargetInDegree</span><span class="op">)</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Target <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html" class="external-link">reorder</a></span><span class="op">(</span><span class="va">Target</span>, <span class="va">TargetInDegree</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Target</span>, y <span class="op">=</span> <span class="va">TargetInDegree</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_col</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html" class="external-link">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Functions with most function calls."</span><span class="op">)</span></code></pre></div>
 <p><img src="functiondepends-usage_files/figure-html/target_degree-1.png" width="100%"></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">dependency</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_dependencies.html">find_dependencies</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">functions</span><span class="op">$</span><span class="va">Function</span><span class="op">)</span>, envir <span class="op">=</span> <span class="va">envir</span>, in_envir <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">dependency</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">SourceNamespace</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">tally</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Count"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span><span class="va">Count</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>SourceNamespace <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder</a></span><span class="op">(</span><span class="va">SourceNamespace</span>, <span class="va">Count</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">SourceNamespace</span>, y <span class="op">=</span> <span class="va">Count</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Top 10 used namespaces."</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">dependency</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_dependencies.html">find_dependencies</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">functions</span><span class="op">$</span><span class="va">Function</span><span class="op">)</span>, envir <span class="op">=</span> <span class="va">envir</span>, in_envir <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="va">dependency</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">SourceNamespace</span><span class="op">)</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">tally</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Count"</span><span class="op">)</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_max</a></span><span class="op">(</span><span class="va">Count</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>SourceNamespace <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html" class="external-link">reorder</a></span><span class="op">(</span><span class="va">SourceNamespace</span>, <span class="va">Count</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">SourceNamespace</span>, y <span class="op">=</span> <span class="va">Count</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_col</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html" class="external-link">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Top 10 used namespaces."</span><span class="op">)</span></code></pre></div>
 <p><img src="functiondepends-usage_files/figure-html/namespace_count-1.png" width="100%"></p>
 <p>See which user-defined functions depend most on other user-defined functions within searched codebase.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">dependency</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_dependencies.html">find_dependencies</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">functions</span><span class="op">$</span><span class="va">Function</span><span class="op">)</span>, envir <span class="op">=</span> <span class="va">envir</span>, in_envir <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">dependency</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="va">Target</span>, <span class="va">TargetInDegree</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="op">-</span><span class="va">TargetInDegree</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 5 x 2</span>
+<code class="sourceCode R"><span class="va">dependency</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_dependencies.html">find_dependencies</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">functions</span><span class="op">$</span><span class="va">Function</span><span class="op">)</span>, envir <span class="op">=</span> <span class="va">envir</span>, in_envir <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">dependency</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">Target</span>, <span class="va">TargetInDegree</span><span class="op">)</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="op">-</span><span class="va">TargetInDegree</span><span class="op">)</span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 2</span></span>
 <span class="co">#&gt;   Target            TargetInDegree</span>
-<span class="co">#&gt;   &lt;chr&gt;                      &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 find_functions                 2</span>
-<span class="co">#&gt; 2 is_function                    1</span>
-<span class="co">#&gt; 3 find_dependencies              0</span>
-<span class="co">#&gt; 4 get_function_name              0</span>
-<span class="co">#&gt; 5 is_assign                      0</span></code></pre></div>
+<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> find_functions                 2</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> is_function                    1</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> find_dependencies              0</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> get_function_name              0</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> is_assign                      0</span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://igraph.org">igraph</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://igraph.org" class="external-link">igraph</a></span><span class="op">)</span>
 
-<span class="va">edges</span> <span class="op">&lt;-</span> <span class="va">dependency</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Source</span>, <span class="va">Target</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span>
+<span class="va">edges</span> <span class="op">&lt;-</span> <span class="va">dependency</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Source</span>, <span class="va">Target</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="op">)</span>
 
-<span class="va">vertices</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">dependency</span><span class="op">$</span><span class="va">Source</span>, <span class="va">dependency</span><span class="op">$</span><span class="va">Target</span><span class="op">)</span><span class="op">)</span>
-<span class="va">vertices</span> <span class="op">&lt;-</span> <span class="va">vertices</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">vertices</span><span class="op">)</span><span class="op">]</span>
+<span class="va">vertices</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">dependency</span><span class="op">$</span><span class="va">Source</span>, <span class="va">dependency</span><span class="op">$</span><span class="va">Target</span><span class="op">)</span><span class="op">)</span>
+<span class="va">vertices</span> <span class="op">&lt;-</span> <span class="va">vertices</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">vertices</span><span class="op">)</span><span class="op">]</span>
 
-<span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/graph_from_data_frame.html">graph_from_data_frame</a></span><span class="op">(</span>d <span class="op">=</span> <span class="va">edges</span>, vertices <span class="op">=</span> <span class="va">vertices</span><span class="op">)</span>
-<span class="va">deg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/degree.html">degree</a></span><span class="op">(</span><span class="va">g</span>, mode <span class="op">=</span> <span class="st">"in"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">size</span> <span class="op">&lt;-</span> <span class="va">deg</span> <span class="op">*</span> <span class="fl">10</span> <span class="op">+</span> <span class="fl">5</span>
-<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">label.cex</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/degree.html">degree</a></span><span class="op">(</span><span class="va">g</span>, mode <span class="op">=</span> <span class="st">"in"</span>, normalized <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span>
+<span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/graph_from_data_frame.html" class="external-link">graph_from_data_frame</a></span><span class="op">(</span>d <span class="op">=</span> <span class="va">edges</span>, vertices <span class="op">=</span> <span class="va">vertices</span><span class="op">)</span>
+<span class="va">deg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/degree.html" class="external-link">degree</a></span><span class="op">(</span><span class="va">g</span>, mode <span class="op">=</span> <span class="st">"in"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">size</span> <span class="op">&lt;-</span> <span class="va">deg</span> <span class="op">*</span> <span class="fl">10</span> <span class="op">+</span> <span class="fl">5</span>
+<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">label.cex</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/degree.html" class="external-link">degree</a></span><span class="op">(</span><span class="va">g</span>, mode <span class="op">=</span> <span class="st">"in"</span>, normalized <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>
   <span class="va">g</span>,
   vertex.color <span class="op">=</span> <span class="st">"grey"</span>,
   edge.color <span class="op">=</span> <span class="st">"grey"</span>,
@@ -212,18 +208,19 @@
 <span class="op">)</span></code></pre></div>
 <p><img src="functiondepends-usage_files/figure-html/network-1.png" width="100%"></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">dependency</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_dependencies.html">find_dependencies</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">functions</span><span class="op">$</span><span class="va">Function</span><span class="op">)</span>, envir <span class="op">=</span> <span class="va">envir</span>, in_envir <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">edges</span> <span class="op">&lt;-</span> <span class="va">dependency</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Source</span>, <span class="va">Target</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span>
-<span class="va">vertices</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">edges</span><span class="op">$</span><span class="va">Source</span>, <span class="va">edges</span><span class="op">$</span><span class="va">Target</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">dependency</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_dependencies.html">find_dependencies</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">functions</span><span class="op">$</span><span class="va">Function</span><span class="op">)</span>, envir <span class="op">=</span> <span class="va">envir</span>, in_envir <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="va">edges</span> <span class="op">&lt;-</span> <span class="va">dependency</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Source</span>, <span class="va">Target</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="op">)</span>
 
-<span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/graph_from_data_frame.html">graph_from_data_frame</a></span><span class="op">(</span><span class="va">edges</span><span class="op">)</span>
-<span class="va">deg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/degree.html">degree</a></span><span class="op">(</span><span class="va">g</span>, mode <span class="op">=</span> <span class="st">"in"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">size</span> <span class="op">&lt;-</span> <span class="va">deg</span>
-<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">label.cex</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/degree.html">degree</a></span><span class="op">(</span><span class="va">g</span>, mode <span class="op">=</span> <span class="st">"in"</span>, normalized <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1.8</span>
+<span class="va">vertices</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">edges</span><span class="op">$</span><span class="va">Source</span>, <span class="va">edges</span><span class="op">$</span><span class="va">Target</span><span class="op">)</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>
+<span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/graph_from_data_frame.html" class="external-link">graph_from_data_frame</a></span><span class="op">(</span><span class="va">edges</span><span class="op">)</span>
+<span class="va">deg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/degree.html" class="external-link">degree</a></span><span class="op">(</span><span class="va">g</span>, mode <span class="op">=</span> <span class="st">"in"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">size</span> <span class="op">&lt;-</span> <span class="va">deg</span>
+<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">label.cex</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/degree.html" class="external-link">degree</a></span><span class="op">(</span><span class="va">g</span>, mode <span class="op">=</span> <span class="st">"in"</span>, normalized <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1.8</span>
+
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>
   <span class="va">g</span>,
   vertex.color <span class="op">=</span> <span class="st">"grey"</span>,
   edge.color <span class="op">=</span> <span class="st">"grey"</span>,
@@ -242,11 +239,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Jakub Sobolewski.</p>
+  <p></p>
+<p>Developed by Jakub Sobolewski.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -254,6 +253,8 @@
 
   
 
+
+  
 
   </body>
 </html>
