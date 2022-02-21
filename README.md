@@ -5,23 +5,13 @@
 
 <!-- badges: start -->
 
-[![Travis build
-status](https://img.shields.io/travis/com/jakubsob/functiondepends.svg?logo=travis)](https://travis-ci.com/jakubsob/functiondepends)
-[![AppVeyor build
-status](https://ci.appveyor.com/api/projects/status/github/jakubsob/functiondepends?branch=master&svg=true)](https://ci.appveyor.com/project/jakubsob/functiondepends)
 [![R build
 status](https://github.com/jakubsob/functiondepends/workflows/R-CMD-check/badge.svg)](https://github.com/jakubsob/functiondepends/actions)
-[![codecov](https://codecov.io/gh/jakubsob/functiondepends/branch/master/graph/badge.svg)](https://codecov.io/gh/jakubsob/functiondepends)
 [![license](https://img.shields.io/badge/license-mit-lightgrey.svg)](https://choosealicense.com/)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/functiondepends)](https://cran.r-project.org/package=functiondepends)
 [![CRAN_latest_release_date](https://www.r-pkg.org/badges/last-release/functiondepends)](https://cran.r-project.org/package=functiondepends)
 [![CRAN
 status](https://cranlogs.r-pkg.org/badges/grand-total/functiondepends)](https://CRAN.R-project.org/package=functiondepends)
-[![Code Quality
-Score](https://www.code-inspector.com/project/16425/score/svg)](https://frontend.code-inspector.com/public/project/16425/functiondepends/dashboard)
-[![Code Quality
-Score](https://www.code-inspector.com/project/16425/status/svg)](https://frontend.code-inspector.com/public/project/16425/functiondepends/dashboard)
-[![R-CMD-check](https://github.com/jakubsob/functiondepends/workflows/R-CMD-check/badge.svg)](https://github.com/jakubsob/functiondepends/actions)
 <!-- badges: end -->
 
 The goal of functiondepends is to allow for tidy exploration of
